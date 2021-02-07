@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "726760020162",
+    "project_id": "plevent-f5c55",
+    "storage_bucket": "plevent-f5c55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726760020162:android:3239a28f0392495f1fc35b",
+        "android_client_info": {
+          "package_name": "com.plevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726760020162-1ft7vob53dvcc5t7fmr54jcerk0ienii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAjvRQxQS-ei_ScenRv-I736wb4OWrC6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726760020162-1ft7vob53dvcc5t7fmr54jcerk0ienii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
