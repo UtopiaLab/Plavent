@@ -33,6 +33,7 @@ class Plavent extends Component {
               fontWeight: 'bold',
               fontFamily: 'roboto',
               fontSize: 24,
+              textAlign: 'center',
             },
             headerTintColor: '#FFFFFF',
           }}>
