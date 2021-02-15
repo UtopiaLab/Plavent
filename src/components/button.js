@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {AuthContext} from '../config/auth-provider';
 
-const CustomButton = ({buttonTitle, navigationPass}) => {
+export const SignUpButton = ({buttonTitle, navigationPass}) => {
+  const {register} = useContext(AuthContext);
+  return (
+    <TouchableOpacity onPress={() => register(navigationPass)}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{buttonTitle}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export const CustomButton = ({buttonTitle, navigationPass}) => {
   return (
     <TouchableOpacity onPress={navigationPass}>
       <View style={styles.button}>

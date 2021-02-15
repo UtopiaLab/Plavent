@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Page02 from './page02';
+import Page02 from '../page02';
 
 const Home = ({navigation}) => {
   return (
@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
 
 const Stack = createStackNavigator();
 
-class Plavent extends Component {
+class MainStack extends Component {
   render() {
     return (
       <NavigationContainer>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Plavent;
+export default MainStack;

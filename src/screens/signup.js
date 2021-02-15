@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Images from '../config/images';
-import CustomButton from '../components/button';
+import {SignUpButton} from '../components/button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const windowWidth = Dimensions.get('window').width;
@@ -26,8 +26,10 @@ class SignUp extends Component {
       check_nameInputChange: false,
       check_emailInputChange: false,
       secureTextEntry: true,
+      currentUser: null,
     };
   }
+
   render() {
     return (
       <ImageBackground source={Images.background} style={styles.background}>
@@ -162,7 +164,10 @@ class SignUp extends Component {
             </View>
 
             <View style={styles.signIn}>
-              <CustomButton buttonTitle="Sign Up" />
+              <SignUpButton
+                buttonTitle="Sign Up"
+                navigationPass={(this.state.email, this.state.password)}
+              />
             </View>
             <View style={styles.buttonBottom}>
               <Text style={styles.alternativeText}>
