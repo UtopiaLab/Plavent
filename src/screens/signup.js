@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -10,209 +10,223 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Images from '../config/images';
-import {SignUpButton} from '../components/button';
+import CustomButton from '../components/button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../config/auth-provider';
 
 const windowWidth = Dimensions.get('window').width;
 // const windowHeight = Dimensions.get('window').height;
 
-class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      check_nameInputChange: false,
-      check_emailInputChange: false,
-      secureTextEntry: true,
-      currentUser: null,
-    };
-  }
+const SignUp = ({navigation}) => {
+  const [data, setData] = React.useState({
+    name: '',
+    email: '',
+    password: '',
+    check_nameInputChange: false,
+    check_emailInputChange: false,
+    secureTextEntry: true,
+    currentUser: null,
+  });
 
-  render() {
-    return (
-      <ImageBackground source={Images.background} style={styles.background}>
-        <View style={styles.view}>
-          <View style={styles.header}>
-            <Animatable.Text
-              style={styles.logoText}
-              animation="bounceIn"
-              duration={1500}>
-              plavent
-            </Animatable.Text>
-            <Text style={styles.titleText}>Sign Up!</Text>
-          </View>
-          <Animatable.View style={styles.footer} animation="fadeInUpBig">
-            <View style={styles.action}>
-              <Icon
-                name="user"
-                size={25}
-                color="#FFFFFF"
-                style={styles.inputIcons}
-              />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Name"
-                placeholderTextColor="#666677"
-                onChangeText={(val) => this.nameInputChange(val)}
-              />
-              {this.state.check_nameInputChange ? (
-                <Icon
-                  name="check-circle-o"
-                  color="green"
-                  size={20}
-                  style={styles.verifyIcons}
-                />
-              ) : null}
-            </View>
+  const {register} = useContext(AuthContext);
 
-            <View style={styles.action}>
-              <Icon
-                name="envelope"
-                size={20}
-                color="#FFFFFF"
-                style={styles.inputIcons}
-              />
-              <TextInput
-                style={styles.textInput}
-                placeholder="E-mail"
-                placeholderTextColor="#666677"
-                autoCapitalize="none"
-                onChangeText={(val) => this.emailInputChange(val)}
-              />
-              {this.state.check_emailInputChange ? (
-                <Icon
-                  name="check-circle-o"
-                  color="green"
-                  size={20}
-                  style={styles.verifyIcons}
-                />
-              ) : null}
-            </View>
+  const emailInputChange = (val) => {
+    if (val.length !== 0) {
+      setData({
+        ...data,
+        email: val,
+        check_emailInputChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        email: val,
+        check_emailInputChange: false,
+      });
+    }
+  };
 
-            <View style={styles.action}>
-              <Icon
-                name="lock"
-                size={25}
-                color="#FFFFFF"
-                style={styles.inputIcons}
-              />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Password"
-                placeholderTextColor="#666677"
-                autoCapitalize="none"
-                secureTextEntry={this.state.secureTextEntry ? true : false}
-                onChangeText={(val) => this.handlePasswordChange(val)}
-              />
-              <TouchableOpacity
-                onPressIn={this.updateSecureText}
-                onPressOut={this.updateSecureText}>
-                {this.state.secureTextEntry ? (
-                  <Icon
-                    name="eye-slash"
-                    color="grey"
-                    size={20}
-                    style={styles.verifyIcons}
-                  />
-                ) : (
-                  <Icon
-                    name="eye"
-                    color="#2680EB"
-                    size={20}
-                    style={styles.verifyIcons}
-                  />
-                )}
-              </TouchableOpacity>
-            </View>
+  const nameInputChange = (val) => {
+    if (val.length !== 0) {
+      setData({
+        ...data,
+        name: val,
+        check_emailInputChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        name: val,
+        check_emailInputChange: false,
+      });
+    }
+  };
 
-            <View style={styles.action}>
-              <Icon
-                name="lock"
-                size={25}
-                color="#FFFFFF"
-                style={styles.inputIcons}
-              />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Repeat Password"
-                placeholderTextColor="#666677"
-                autoCapitalize="none"
-                secureTextEntry={this.state.secureTextEntry ? true : false}
-                onChangeText={(val) => this.handlePasswordChange(val)}
-              />
-              <TouchableOpacity
-                onPressIn={this.updateSecureText}
-                onPressOut={this.updateSecureText}>
-                {this.state.secureTextEntry ? (
-                  <Icon
-                    name="eye-slash"
-                    color="grey"
-                    size={20}
-                    style={styles.verifyIcons}
-                  />
-                ) : (
-                  <Icon
-                    name="eye"
-                    color="#2680EB"
-                    size={20}
-                    style={styles.verifyIcons}
-                  />
-                )}
-              </TouchableOpacity>
-            </View>
+  const handlePasswordChange = (val) => {
+    setData({
+      ...data,
+      password: val,
+    });
+  };
 
-            <View style={styles.signIn}>
-              <SignUpButton
-                buttonTitle="Sign Up"
-                navigationPass={(this.state.email, this.state.password)}
-              />
-            </View>
-            <View style={styles.buttonBottom}>
-              <Text style={styles.alternativeText}>
-                Already have an account?
-              </Text>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.signUpText}>Sign In</Text>
-              </TouchableOpacity>
-            </View>
-          </Animatable.View>
+  const updateSecureText = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry,
+    });
+  };
 
-          <Text style={styles.footerText}>Utopia Lab © 2021</Text>
+  return (
+    <ImageBackground source={Images.background} style={styles.background}>
+      <View style={styles.view}>
+        <View style={styles.header}>
+          <Animatable.Text
+            style={styles.logoText}
+            animation="bounceIn"
+            duration={1500}>
+            plavent
+          </Animatable.Text>
+          <Text style={styles.titleText}>Sign Up!</Text>
         </View>
-      </ImageBackground>
-    );
-  }
+        <Animatable.View style={styles.footer} animation="fadeInUpBig">
+          <View style={styles.action}>
+            <Icon
+              name="user"
+              size={25}
+              color="#FFFFFF"
+              style={styles.inputIcons}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Name"
+              placeholderTextColor="#666677"
+              onChangeText={(val) => nameInputChange(val)}
+            />
+            {data.check_nameInputChange ? (
+              <Icon
+                name="check-circle-o"
+                color="green"
+                size={20}
+                style={styles.verifyIcons}
+              />
+            ) : null}
+          </View>
 
-  emailInputChange = (val) => {
-    if (val.length !== 0) {
-      this.setState({email: val});
-      this.setState({check_emailInputChange: true});
-    } else {
-      this.setState({email: val});
-      this.setState({check_emailInputChange: false});
-    }
-  };
+          <View style={styles.action}>
+            <Icon
+              name="envelope"
+              size={20}
+              color="#FFFFFF"
+              style={styles.inputIcons}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="E-mail"
+              placeholderTextColor="#666677"
+              autoCapitalize="none"
+              onChangeText={(val) => emailInputChange(val)}
+            />
+            {data.check_emailInputChange ? (
+              <Icon
+                name="check-circle-o"
+                color="green"
+                size={20}
+                style={styles.verifyIcons}
+              />
+            ) : null}
+          </View>
 
-  nameInputChange = (val) => {
-    if (val.length !== 0) {
-      this.setState({name: val});
-      this.setState({check_nameInputChange: true});
-    } else {
-      this.setState({name: val});
-      this.setState({check_nameInputChange: false});
-    }
-  };
+          <View style={styles.action}>
+            <Icon
+              name="lock"
+              size={25}
+              color="#FFFFFF"
+              style={styles.inputIcons}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Password"
+              placeholderTextColor="#666677"
+              autoCapitalize="none"
+              secureTextEntry={data.secureTextEntry ? true : false}
+              onChangeText={(val) => handlePasswordChange(val)}
+            />
+            <TouchableOpacity
+              onPressIn={updateSecureText}
+              onPressOut={updateSecureText}>
+              {data.secureTextEntry ? (
+                <Icon
+                  name="eye-slash"
+                  color="grey"
+                  size={20}
+                  style={styles.verifyIcons}
+                />
+              ) : (
+                <Icon
+                  name="eye"
+                  color="#2680EB"
+                  size={20}
+                  style={styles.verifyIcons}
+                />
+              )}
+            </TouchableOpacity>
+          </View>
 
-  handlePasswordChange = (val) => {
-    this.setState({password: val});
-  };
+          <View style={styles.action}>
+            <Icon
+              name="lock"
+              size={25}
+              color="#FFFFFF"
+              style={styles.inputIcons}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Repeat Password"
+              placeholderTextColor="#666677"
+              autoCapitalize="none"
+              secureTextEntry={data.secureTextEntry ? true : false}
+              onChangeText={(val) => this.handlePasswordChange(val)}
+            />
+            <TouchableOpacity
+              onPressIn={updateSecureText}
+              onPressOut={updateSecureText}>
+              {data.secureTextEntry ? (
+                <Icon
+                  name="eye-slash"
+                  color="grey"
+                  size={20}
+                  style={styles.verifyIcons}
+                />
+              ) : (
+                <Icon
+                  name="eye"
+                  color="#2680EB"
+                  size={20}
+                  style={styles.verifyIcons}
+                />
+              )}
+            </TouchableOpacity>
+          </View>
 
-  updateSecureText = () => {
-    this.setState({secureTextEntry: !this.state.secureTextEntry});
-  };
-}
+          <View style={styles.signIn}>
+            <CustomButton
+              buttonTitle="Sign Up"
+              navigationPass={() => register(data.email, data.password)}
+            />
+          </View>
+          <View style={styles.buttonBottom}>
+            <Text style={styles.alternativeText}>Already have an account?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.signUpText}>Sign In</Text>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
+
+        <Text style={styles.footerText}>Utopia Lab © 2021</Text>
+      </View>
+    </ImageBackground>
+  );
+};
 
 const styles = StyleSheet.create({
   view: {
