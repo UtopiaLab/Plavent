@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import * as Animatable from 'react-native-animatable';
 import Images from '../config/images';
 import CustomButton from '../components/button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../config/auth-provider';
 
 const windowWidth = Dimensions.get('window').width;
 // const windowHeight = Dimensions.get('window').height;
@@ -23,6 +24,7 @@ const Login = ({navigation}) => {
     check_emailInputChange: false,
     secureTextEntry: true,
   });
+  const {login} = useContext(AuthContext);
   const emailInputChange = (val) => {
     if (val.length !== 0) {
       setData({
@@ -127,7 +129,10 @@ const Login = ({navigation}) => {
           </View>
 
           <View style={styles.signIn}>
-            <CustomButton buttonTitle="Sign In" />
+            <CustomButton
+              buttonTitle="Sign In"
+              navigationPass={() => login(data.email, data.password)}
+            />
           </View>
           <View style={styles.buttonBottom}>
             <Text style={styles.alternativeText}>Don't have an account?</Text>

@@ -1,17 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-// export const SignUpButton = ({buttonTitle, navigationPass}) => {
-//   const {register} = useContext(AuthContext);
-//   return (
-//     <TouchableOpacity onPress={() => register(navigationPass)}>
-//       <View style={styles.button}>
-//         <Text style={styles.buttonText}>{buttonTitle}</Text>
-//       </View>
-//     </TouchableOpacity>
-//   );
-// };
-
 const CustomButton = ({buttonTitle, navigationPass}) => {
   return (
     <TouchableOpacity onPress={navigationPass}>
