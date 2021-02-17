@@ -1,15 +1,10 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
-const Home = ({navigation}) => {
+const Food = ({navigation}) => {
   return (
     <View style={styles.view}>
-      <Text style={styles.bodyText}>Hello!</Text>
-      <Button
-        style={styles.button}
-        title="Go to Page 02"
-        onPress={() => navigation.navigate('Event Info')}
-      />
+      <Text style={styles.bodyText}>Food Screen</Text>
     </View>
   );
 };
@@ -27,9 +22,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#FFFFFF',
   },
-  button: {
-    margin: 5,
-  },
 });
 
-export default Home;
+export default Food;
